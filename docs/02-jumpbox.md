@@ -12,6 +12,27 @@ ssh root@jumpbox
 
 All commands will be run as the `root` user. This is being done for the sake of convenience, and will help reduce the number of commands required to set everything up.
 
+Modify `/etc/ssh/sshd_config` on all hosts and add/uncomment/edit:
+
+```
+PermitRootLogin yes
+```
+
+Restart SSH:
+
+```
+sudo service ssh restart
+```
+
+Then generte SSH key and add to all hosts:
+
+```
+ssh-keygen
+ssh-copy-id root@server
+ssh-copy-id root@node-0
+ssh-copy-id root@node-1
+```
+
 ### Install Command Line Utilities
 
 Now that you are logged into the `jumpbox` machine as the `root` user, you will install the command line utilities that will be used to preform various tasks throughout the tutorial. 
@@ -94,7 +115,7 @@ total 584M
 
 ### Install kubectl
 
-In this section you will install the `kubectl`, the official Kubernetes client command line tool, on the `jumpbox` machine. `kubectl will be used to interact with the Kubernetes control once your cluster is provisioned later in this tutorial.
+In this section you will install the `kubectl`, the official Kubernetes client command line tool, on the `jumpbox` machine. `kubectl` will be used to interact with the Kubernetes control once your cluster is provisioned later in this tutorial.
 
 Use the `chmod` command to make the `kubectl` binary executable and move it to the `/usr/local/bin/` directory:
 
