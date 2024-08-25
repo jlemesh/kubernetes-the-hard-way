@@ -27,4 +27,16 @@ After running the `uname` command you should see the following output:
 
 You maybe surprised to see `aarch64` here, but that is the official name for the Arm Architecture 64-bit instruction set. You will often see `arm64` used by Apple, and the maintainers of the Linux kernel, when referring to support for `aarch64`. This tutorial will use `arm64` consistently throughout to avoid confusion.
 
+## Set up KVM
+
+```
+sudo apt-get remove --purge bridge-utils cpu-checker libvirt-clients libvirt-daemon qemu qemu-kvm virt-manager
+sudo apt -y install bridge-utils cpu-checker libvirt-clients libvirt-daemon qemu qemu-kvm virt-manager
+kvm-ok
+sudo virt-install --name jumpbox --os-variant debian12 --vcpus 1 --ram 512 --disk size=20 --location http://ftp.us.debian.org/debian/dists/stable/main/installer-amd64/ --extra-args='console=ttyS0,115200n8 serial' --machine q35 --boot uefi
+sudo virt-install --name server --os-variant debian12 --vcpus 1 --ram 2048 --disk size=20 --location http://ftp.us.debian.org/debian/dists/stable/main/installer-amd64/ --extra-args='console=ttyS0,115200n8 serial'  --machine q35 --boot uefi
+sudo virt-install --name node-0 --os-variant debian12 --vcpus 1 --ram 2048 --disk size=20 --location http://ftp.us.debian.org/debian/dists/stable/main/installer-amd64/ --extra-args='console=ttyS0,115200n8 serial' --machine q35 --boot uefi
+sudo virt-install --name node-1 --os-variant debian12 --vcpus 1 --ram 2048 --disk size=20 --location http://ftp.us.debian.org/debian/dists/stable/main/installer-amd64/ --extra-args='console=ttyS0,115200n8 serial' --machine q35 --boot uefi
+```
+
 Next: [setting-up-the-jumpbox](02-jumpbox.md)
